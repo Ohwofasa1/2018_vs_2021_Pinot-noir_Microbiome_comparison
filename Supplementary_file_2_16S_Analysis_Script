@@ -448,13 +448,13 @@ ord_unifrac <- ordinate(ps_rel_abund, method = "PCoA", distance = "wunifrac") i.
 ord_unifrac_un <- ordinate(ps_rel_abund, method = "PCoA", distance = "unifrac") i.e unweighted unifrac
 
 ## Using weighted unifrac to calculate ANOSIM
-anosim(ord_unifrac$values, sample_info_tab$Location, permutations = 1000)
+anosim(ord_unifrac$values, sample_info_tab$Vintage, permutations = 1000)
 
 ## Using unweighted unifrac to calculate ANOSIM
-anosim(ord_unifrac_un$values, sample_info_tab$Location, permutations = 1000)
+anosim(ord_unifrac_un$values, sample_info_tab$Vintage, permutations = 1000)
 
 #Differential Abundance using DESeq2
-sample_data(ps)$Location <- as.factor(sample_data(ps)$Vintage)
+sample_data(ps)$Vintage <- as.factor(sample_data(ps)$Vintage)
 
 ds <- phyloseq_to_deseq2(ps, ~ Vintage)
 ds <-  DESeq(ds)
