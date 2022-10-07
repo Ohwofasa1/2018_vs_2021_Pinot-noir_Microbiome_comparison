@@ -290,28 +290,6 @@ ps_phylum <- phyloseq::tax_glom(ps, "Phylum")
 phyloseq::taxa_names(ps_phylum) <- phyloseq::tax_table(ps_phylum)[, "Phylum"]
 phyloseq::otu_table(ps_phylum)[1:3, 1:3]
 
-#Subset ps object to any specific Genus of interest relevant to wine making 
-## e.g Metschnikowia
-#Saccharomyces
-
-ps_metschi <- subset_taxa(ps_rel_abund, Genus == "Metschnikowia")
-
-#Agglomerate to phylum-level and rename
-
-ps_Met <- phyloseq::tax_glom(ps_metschi, "Genus")
-phyloseq::taxa_names(ps_Met) <- phyloseq::tax_table(ps_Met)[, "Genus"]
-head(phyloseq::otu_table(ps_Met))
-
-level_order <- c('Lag','Exp','S1','S2')
-
-#Melt and plot
-phyloseq::psmelt(ps_Met) %>%
-ggplot(data = ., aes(x = Location, y = Abundance)) +
-  geom_boxplot(outlier.shape  = NA) +
-  geom_jitter(aes(color = OTU), height = 0, width = .2) +
-  labs(x = "", y = "Abundance\n") +
-  facet_wrap(OTU ~ factor(Ferment_Stage,level = level_order), scales = "free")
-  
 ## Relative Abundance plot
 ####Subsetting by Vintage to genus Level. First create a combined Vintage object
 
@@ -449,7 +427,7 @@ anosim(ord_unifrac$values, sample_info_tab$Vintage, permutations = 1000)
 anosim(ord_unifrac_un$values, sample_info_tab$Vintage, permutations = 1000)
 
 #Differential Abundance using DESeq2
-sample_data(ps)$Location <- as.factor(sample_data(ps)$Vintage)
+sample_data(ps)$Vintage <- as.factor(sample_data(ps)$Vintage)
 
 ds <- phyloseq_to_deseq2(ps, ~ Vintage)
 ds <-  DESeq(ds)
