@@ -327,22 +327,28 @@ Vintage_2018_ge_ps <- phyloseq::subset_samples(ps_ge_vintage, Vintage == "Year_2
 Vintage_2021_ge_ps <- phyloseq::subset_samples(ps_ge_vintage, Vintage == "Year_2021")
 
 
-## 2018 Genera
+## To make vintage 2018 relative abundance plot using core bacterial microbiome
+
 
 ps_2018_rel_vine <- microbiome::transform(Vintage_2018_ge_ps, "compositional")
 
 ps_2018_rel_vine <- Vintage_2018_ge_ps %>%
-  aggregate_rare(level = "Genus", detection = 50/100, prevalence = 70/100) %>% 
+  aggregate_rare(level = "Genus", detection = 0.0001, prevalence = 70/100) %>% 
   microbiome::transform(transform = "compositional")
 
+#####To see core Bacterial Microbiome associated with the 2018 vintage
+core_members(ps_2018_rel_vine, detection = 0.0001, prevalence = 70/100)
 
-## 2021 Genera
 
+## To make vintage 2021 relative abundance plot using core bacterial microbiome
 ps_2021_rel_vine <- microbiome::transform(Vintage_2021_ge_ps, "compositional")
 
 ps_2021_rel_vine <- Vintage_2021_ge_ps %>%
-  aggregate_rare(level = "Genus", detection = 50/100, prevalence = 70/100) %>% 
+  aggregate_rare(level = "Genus", detection = 0.0001, prevalence = 70/100) %>% 
   microbiome::transform(transform = "compositional")
+
+#####To see core Bacterial Microbiome associated with the 2021 vintage
+core_members(ps_2021_rel_vine, detection = 0.0001, prevalence = 70/100)
 
 ##Creating color palette
 
